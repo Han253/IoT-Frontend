@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-lg">
-    <q-table :rows-per-page-options="[0]" :rows="categories" :columns="categoryColumns" :loading="loading">
+    <q-table :rows-per-page-options="[0]" :columns="categoryColumns" :rows="categories" :loading="loading">
       <template v-slot:top-left>
         <div class="text-h6">Categories</div>
       </template>
@@ -17,7 +17,7 @@
       </template>
     </q-table>
 
-    <CategoryFormDialog @saved="onCategorySaved" ref="categoryForm" />
+    <CategoryFormDialog @saved="listCategories" ref="categoryForm" />
   </q-page>
 </template>
 
@@ -37,14 +37,11 @@ const showDialog = (c: Category | undefined = undefined) => {
 }
 
 const listCategories = () => {
-  console.log('CALL API');
-  // adds a fake category
-  categories.value.push({
-    id: 1, name: 'A test category', description: 'A test description here'
-  })
+  loading.value = true
+  fetchCategories()
+    .then(results => categories.value = results)
+    .finally(() => loading.value = false)
 }
-
-const onCategorySaved = () => console.log('SAVED')
 
 onMounted(listCategories)
 </script>

@@ -1,7 +1,7 @@
 import { api } from 'src/boot/axios'
 import { Category, CategoryForm } from 'src/models/categories'
 
-const BASE_URL = '/categories'
+const BASE_URL = '/category'
 
 export async function fetchCategories(): Promise<Category[]> {
   return (await api.get<Category[]>(BASE_URL)).data

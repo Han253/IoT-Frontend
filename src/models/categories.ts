@@ -12,22 +12,17 @@ export interface Category {
 }
 
 export const categoryColumns: QTableColumn[] = [
-  {
-    name: 'name',
-    field: 'name',
-    label: 'Name',
-    align: 'center',
-  },
+  { name: 'name', label: 'Name', field: 'name' },
   {
     name: 'description',
-    field: 'description',
     label: 'Description',
+    field: 'description',
     align: 'center',
   },
   {
     name: 'options',
-    field: '',
     label: 'Options',
+    field: 'options',
     align: 'center',
   },
 ]
