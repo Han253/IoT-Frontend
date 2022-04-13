@@ -20,5 +20,5 @@ export async function updateCategory(id: number, data: CategoryForm) {
 }
 
 export async function deleteCategory(id: number) {
-  return (await api.put(`${BASE_URL}/id/${id}`)).data
+  return (await api.delete(`${BASE_URL}/id/${id}`)).data
 }
