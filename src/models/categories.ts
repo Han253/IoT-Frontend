@@ -1,4 +1,4 @@
-import { QTableColumn } from 'quasar'
+import { QTableProps } from 'quasar'
 
 export interface CategoryForm {
   name: string
@@ -11,8 +11,13 @@ export interface Category {
   description: string
 }
 
-export const categoryColumns: QTableColumn[] = [
-  { name: 'name', label: 'Name', field: 'name' },
+export const categoryColumns: QTableProps['columns'] = [
+  {
+    name: 'name',
+    label: 'Name',
+    field: 'name',
+    align: 'center',
+  },
   {
     name: 'description',
     label: 'Description',
