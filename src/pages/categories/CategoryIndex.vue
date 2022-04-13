@@ -20,7 +20,6 @@
 
       <template #body-cell-options="props">
         <q-td :props="props">
-          <q-btn color="grey" icon="info" flat round />
           <q-btn
             @click="showDialog(props.row)"
             color="grey"
