@@ -1,17 +1,33 @@
 <template>
   <q-page class="q-pa-lg">
-    <q-table :rows-per-page-options="[0]" :columns="categoryColumns" :rows="categories" :loading="loading">
+    <q-table
+      :rows-per-page-options="[0]"
+      :columns="categoryColumns"
+      :rows="categories"
+      :loading="loading"
+    >
       <template v-slot:top-left>
         <div class="text-h6">Categories</div>
       </template>
       <template v-slot:top-right>
-        <q-btn color="green-8" label="ADD" no-caps @click="showDialog(undefined)" />
+        <q-btn
+          color="green-8"
+          label="ADD"
+          no-caps
+          @click="showDialog(undefined)"
+        />
       </template>
 
       <template #body-cell-options="props">
         <q-td :props="props">
           <q-btn color="grey" icon="info" flat round />
-          <q-btn @click="showDialog(props.row)" color="grey" icon="edit" flat round />
+          <q-btn
+            @click="showDialog(props.row)"
+            color="grey"
+            icon="edit"
+            flat
+            round
+          />
           <q-btn color="red" icon="delete" flat round />
         </q-td>
       </template>
@@ -39,8 +55,8 @@ const showDialog = (c: Category | undefined = undefined) => {
 const listCategories = () => {
   loading.value = true
   fetchCategories()
-    .then(results => categories.value = results)
-    .finally(() => loading.value = false)
+    .then((results) => (categories.value = results))
+    .finally(() => (loading.value = false))
 }
 
 onMounted(listCategories)
