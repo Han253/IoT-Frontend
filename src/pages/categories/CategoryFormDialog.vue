@@ -55,8 +55,10 @@ import { ref } from 'vue'
 import { useForm, useField } from 'vee-validate'
 import { Category, CategoryForm } from 'src/models/categories'
 import { storeCategory, updateCategory } from 'src/services/categories'
+import { useQuasar } from 'quasar'
 
 const emit = defineEmits(['saved'])
+const $q = useQuasar()
 
 let categoryId: number | undefined = undefined
 const schema = {
@@ -79,6 +81,10 @@ const onSubmit = handleSubmit(async (values) => {
     await storeCategory(values)
   }
   showDialog.value = false
+  $q.notify({
+    message: `The category "${values.name}" has been successfully registered.`,
+    type: 'positive',
+  })
   emit('saved')
 })
 
