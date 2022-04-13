@@ -1,21 +1,14 @@
-import { Device, DeviceForm } from 'src/models/devices'
+import { api } from 'src/boot/axios'
+import { Device } from 'src/models/devices'
+import { formatToDateLocal } from 'src/utils/dates'
 
-export function fetchAllDevices(): Promise<Device[]> {
-  return Promise.resolve([])
-}
+const BASE_URL = '/device'
 
-export async function fetchDeviceById(id: number): Promise<Device> {
-  return Promise.resolve({
-    id: 3,
-    name: '',
-    description: '',
+export async function fetchDevices(): Promise<Device[]> {
+  const devices = (await api.get<Device[]>(BASE_URL)).data
+  devices.forEach((d) => {
+    d.created_at = formatToDateLocal(d.created_at)
+    d.update_at = formatToDateLocal(d.created_at)
   })
-}
-
-export async function storeDevice(data: DeviceForm): Promise<Device> {
-  return Promise.resolve({
-    id: 3,
-    name: '',
-    description: '',
-  })
+  return devices
 }

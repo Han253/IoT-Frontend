@@ -1,6 +1,7 @@
 export interface Property {
   id: number
-  tag: string
+  name: string
+  value: string
   description: string
 }
 
