@@ -56,6 +56,8 @@ import { useForm, useField } from 'vee-validate'
 import { Category, CategoryForm } from 'src/models/categories'
 import { storeCategory, updateCategory } from 'src/services/categories'
 import { useQuasar } from 'quasar'
+import { setErrorsIfInvalidForm } from 'src/utils/forms'
+import { AxiosError } from 'axios'
 
 const emit = defineEmits(['saved'])
 const $q = useQuasar()
@@ -67,25 +69,28 @@ const schema = {
 
 const showDialog = ref(false)
 
-const { isSubmitting, errors, resetForm, handleSubmit } = useForm<CategoryForm>(
-  { validationSchema: schema }
-)
+const { isSubmitting, errors, resetForm, handleSubmit, setErrors } =
+  useForm<CategoryForm>({ validationSchema: schema })
 
 const { value: name } = useField<string>('name')
 const { value: description } = useField<string>('description')
 
 const onSubmit = handleSubmit(async (values) => {
-  if (categoryId) {
-    await updateCategory(categoryId, values)
-  } else {
-    await storeCategory(values)
+  try {
+    if (categoryId) {
+      await updateCategory(categoryId, values)
+    } else {
+      await storeCategory(values)
+    }
+    showDialog.value = false
+    $q.notify({
+      message: `The category "${values.name}" has been successfully registered.`,
+      type: 'positive',
+    })
+    emit('saved')
+  } catch (error) {
+    setErrorsIfInvalidForm(error as AxiosError, setErrors)
   }
-  showDialog.value = false
-  $q.notify({
-    message: `The category "${values.name}" has been successfully registered.`,
-    type: 'positive',
-  })
-  emit('saved')
 })
 
 const showForm = (c: Category | undefined = undefined) => {
