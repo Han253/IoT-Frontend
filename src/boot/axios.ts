@@ -1,5 +1,6 @@
 import { boot } from 'quasar/wrappers'
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosError, AxiosInstance } from 'axios'
+import { ErrorHandler } from 'src/models'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -26,5 +27,23 @@ export default boot(({ app }) => {
   // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
   //       so you can easily perform requests against your app's API
 })
+
+export function setInterceptors(handler: ErrorHandler) {
+  api.interceptors.response.use(undefined, async (error) => {
+    if (isNetworkError(error)) {
+      handler(503)
+    } else {
+      const status = error.response.status
+      if (status !== 400) {
+        handler(status)
+      }
+    }
+    return Promise.reject(error)
+  })
+}
+
+export function isNetworkError(error: AxiosError) {
+  return !error.response
+}
 
 export { api }
