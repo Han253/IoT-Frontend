@@ -6,6 +6,11 @@ const deviceRoutes: RouteRecordRaw[] = [
     name: 'devices.index',
     component: () => import('../../pages/devices/DeviceIndex.vue'),
   },
+  {
+    path: 'devices/register',
+    name: 'devices.form',
+    component: () => import('../../pages/devices/RegisterDevice.vue'),
+  },
 ]
 
 export default deviceRoutes

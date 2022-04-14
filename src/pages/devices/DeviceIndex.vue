@@ -10,7 +10,12 @@
         <div class="text-h6">Devices</div>
       </template>
       <template v-slot:top-right>
-        <q-btn color="green-8" label="ADD" no-caps />
+        <q-btn
+          :to="{ name: 'devices.form' }"
+          color="green-8"
+          label="ADD"
+          no-caps
+        />
       </template>
 
       <template #body-cell-options="props">
