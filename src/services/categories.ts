@@ -16,9 +16,9 @@ export async function storeCategory(data: CategoryForm): Promise<Category> {
 }
 
 export async function updateCategory(id: number, data: CategoryForm) {
-  return (await api.put(`${BASE_URL}/id/${id}`, data)).data
+  return (await api.put(`${BASE_URL}/${id}`, data)).data
 }
 
 export async function deleteCategory(id: number) {
-  return (await api.delete(`${BASE_URL}/id/${id}`)).data
+  return (await api.delete(`${BASE_URL}/${id}`)).data
 }
