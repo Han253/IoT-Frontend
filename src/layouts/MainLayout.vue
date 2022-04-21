@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh LpR lff" class="bg-grey-2">
+  <q-layout view="hHh LpR lff" class="bg-grey-3">
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
@@ -46,12 +46,12 @@
 </template>
 
 <script lang="ts" setup>
-  import { menuList } from 'src/models/menu'
-  import { ref } from 'vue'
+import { menuList } from 'src/models/menu'
+import { ref } from 'vue'
 
-  const leftDrawerOpen = ref(false)
+const leftDrawerOpen = ref(false)
 
-  const toggleLeftDrawer = () => {
-    leftDrawerOpen.value = !leftDrawerOpen.value
-  }
+const toggleLeftDrawer = () => {
+  leftDrawerOpen.value = !leftDrawerOpen.value
+}
 </script>
