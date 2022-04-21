@@ -1,8 +1,8 @@
 {
   "name": "iot-frontend-vue",
   "version": "0.0.1",
-  "description": "A Quasar Project",
-  "productName": "IoT management application web",
+  "description": "An IoT management application web",
+  "productName": "IoT UI Web",
   "author": "Edwin Badillo <edwbadillo95@gmail.com>",
   "private": true,
   "scripts": {
