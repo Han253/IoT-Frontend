@@ -8,7 +8,7 @@ export async function fetchDevices(): Promise<Device[]> {
   const devices = (await api.get<Device[]>(BASE_URL)).data
   devices.forEach((d) => {
     d.created_at = formatToDateLocal(d.created_at)
-    d.update_at = formatToDateLocal(d.created_at)
+    d.update_at = formatToDateLocal(d.update_at)
   })
   return devices
 }
