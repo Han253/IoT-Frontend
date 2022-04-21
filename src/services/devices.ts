@@ -1,5 +1,5 @@
 import { api } from 'src/boot/axios'
-import { Device } from 'src/models/devices'
+import { Device, DeviceForm } from 'src/models/devices'
 import { formatToDateLocal } from 'src/utils/dates'
 
 const BASE_URL = '/device'
@@ -11,4 +11,8 @@ export async function fetchDevices(): Promise<Device[]> {
     d.update_at = formatToDateLocal(d.created_at)
   })
   return devices
+}
+
+export async function storeDevice(data: DeviceForm): Promise<Device> {
+  return (await api.post<Device>(BASE_URL, data)).data
 }

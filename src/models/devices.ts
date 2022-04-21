@@ -11,8 +11,12 @@ export enum DeviceStatus {
 
 export interface DeviceForm {
   name: string
-  description: string
+  description: string | null | null
+  categories: number[]
+  device_parent: number | null | null
 }
+
+export type OnValidDeviceForm = (device: DeviceForm | null) => void
 
 export interface Device {
   id: number
@@ -21,9 +25,9 @@ export interface Device {
   created_at: string
   update_at: string
   device_parent: number
-  properties: Array<Property>
-  resources: Array<Resource>
-  categories: Array<Category>
+  properties: Property[]
+  resources: Resource[]
+  categories: Category[]
 }
 
 export interface VirtualDevice {
