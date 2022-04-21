@@ -97,8 +97,10 @@ import { fetchDevices, storeDevice } from 'src/services/devices'
 import { setErrorsIfInvalidForm } from 'src/utils/forms'
 import { useField, useForm } from 'vee-validate'
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const $q = useQuasar()
+const router = useRouter()
 const schema = {
   name: 'required',
 }
@@ -135,6 +137,7 @@ const onSubmit = handleSubmit(async (values) => {
       type: 'positive',
       message: 'The device data has been successfully registered',
     })
+    router.push({ name: 'devices.details', params: { id: savedDevice.id } })
   } catch (error) {
     setErrorsIfInvalidForm(error as AxiosError, setErrors)
   }

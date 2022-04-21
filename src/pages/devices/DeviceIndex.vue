@@ -20,7 +20,13 @@
 
       <template #body-cell-options="props">
         <q-td :props="props">
-          <q-btn color="grey" icon="info" flat round />
+          <q-btn
+            :to="{ name: 'devices.details', params: { id: props.row.id } }"
+            color="grey"
+            icon="info"
+            flat
+            round
+          />
           <q-btn color="grey" icon="edit" flat round />
           <q-btn color="red" icon="delete" flat round />
         </q-td>
