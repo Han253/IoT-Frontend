@@ -13,6 +13,17 @@ export async function fetchDevices(): Promise<Device[]> {
   return devices
 }
 
+export async function fetchDeviceById(id: number): Promise<Device> {
+  return (await api.get<Device>(`${BASE_URL}/${id}`)).data
+}
+
 export async function storeDevice(data: DeviceForm): Promise<Device> {
   return (await api.post<Device>(BASE_URL, data)).data
+}
+
+export async function updateDevice(
+  id: number,
+  data: DeviceForm
+): Promise<Device> {
+  return (await api.put<Device>(`${BASE_URL}/${id}`, data)).data
 }

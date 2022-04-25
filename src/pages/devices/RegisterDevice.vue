@@ -5,7 +5,9 @@
         <form @submit="onSubmit">
           <q-card>
             <q-card-section>
-              <div class="text-h6">Register device</div>
+              <div class="text-h6">
+                {{ deviceId ? 'Update device' : 'Register device' }}
+              </div>
               <div class="text-subtitle2">
                 Please fill out the following form to register a device, fields
                 with * are required.
@@ -93,17 +95,25 @@ import { SelectOption } from 'src/models'
 import { Category } from 'src/models/categories'
 import { Device, DeviceForm } from 'src/models/devices'
 import { fetchCategories } from 'src/services/categories'
-import { fetchDevices, storeDevice } from 'src/services/devices'
+import {
+  fetchDevices,
+  storeDevice,
+  fetchDeviceById,
+  updateDevice,
+} from 'src/services/devices'
 import { setErrorsIfInvalidForm } from 'src/utils/forms'
 import { useField, useForm } from 'vee-validate'
 import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const $q = useQuasar()
 const router = useRouter()
+const route = useRoute()
+
 const schema = {
   name: 'required',
 }
+const deviceId = route.params.id
 
 const categoriesOptions = ref<SelectOption[]>([])
 const deviceOptions = ref<SelectOption[]>([])
@@ -116,8 +126,10 @@ const { errors, isSubmitting, handleSubmit, setErrors } = useForm<DeviceForm>({
 // Form data
 const { value: name } = useField<string>('name')
 const { value: description } = useField<string>('description')
-const { value: deviceParent } = useField<SelectOption>('device_parent')
-const { value: categoriesSelected } = useField<SelectOption[]>('categories')
+const { value: deviceParent } = useField<SelectOption | null>('device_parent')
+const { value: categoriesSelected } = useField<SelectOption[] | null>(
+  'categories'
+)
 
 const onSubmit = handleSubmit(async (values) => {
   const categories = categoriesSelected.value
@@ -132,7 +144,13 @@ const onSubmit = handleSubmit(async (values) => {
   values.device_parent = device
 
   try {
-    const savedDevice = await storeDevice(values)
+    let savedDevice: Device
+    if (deviceId) {
+      const id = parseInt(deviceId.toString())
+      savedDevice = await updateDevice(id, values)
+    } else {
+      savedDevice = await storeDevice(values)
+    }
     $q.notify({
       type: 'positive',
       message: 'The device data has been successfully registered',
@@ -158,11 +176,35 @@ const convertDevicesToOptions = (c: Device[]): SelectOption[] => {
 }
 
 onMounted(async () => {
+  if (deviceId) {
+    const deviceData = await fetchDeviceById(parseInt(deviceId.toString()))
+    name.value = deviceData.name
+    description.value = deviceData.description
+    // TODO: Fetch device parent info for set option correctly.
+    deviceParent.value = deviceData.device_parent
+      ? { label: '', value: deviceData.device_parent }
+      : null
+    categoriesSelected.value = deviceData.categories.map<SelectOption>((c) => ({
+      label: c.name,
+      value: c.id,
+    }))
+  }
+
   const categories = await fetchCategories()
   categoriesOptions.value = convertCategoriesToOptions(categories)
 
   const devices = await fetchDevices()
   deviceOptions.value = convertDevicesToOptions(devices)
+
+  // TODO: Fetch device parent info for remove the below code.
+  if (deviceParent.value?.value) {
+    deviceOptions.value.forEach((d) => {
+      if (d.value == deviceParent.value?.value) {
+        deviceParent.value.label = d.label
+      }
+    })
+  }
+  ///////////////////////////////////////////////////////////
 
   busy.value = false
 })

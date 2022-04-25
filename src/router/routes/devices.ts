@@ -12,6 +12,11 @@ const deviceRoutes: RouteRecordRaw[] = [
     component: () => import('../../pages/devices/RegisterDevice.vue'),
   },
   {
+    path: 'devices/:id/edit',
+    name: 'devices.edit',
+    component: () => import('../../pages/devices/RegisterDevice.vue'),
+  },
+  {
     path: 'devices/:id',
     name: 'devices.details',
     component: () => import('../../pages/devices/DeviceDetails.vue'),
