@@ -32,7 +32,8 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view :key="$route.fullPath" />
+      <!-- <router-view /> -->
     </q-page-container>
 
     <q-footer bordered class="bg-grey-1 text-grey">

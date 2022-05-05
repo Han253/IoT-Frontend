@@ -14,6 +14,7 @@ export interface DeviceForm {
   description: string | null | null
   categories: number[]
   device_parent: number | null | null
+  gateway: boolean
 }
 
 export type OnValidDeviceForm = (device: DeviceForm | null) => void
@@ -22,12 +23,14 @@ export interface Device {
   id: number
   name: string
   description: string
+  gateway: boolean
   created_at: string
   update_at: string
   device_parent: number
   properties: Property[]
   resources: Resource[]
   categories: Category[]
+  devices: Device[]
 }
 
 export interface VirtualDevice {
@@ -59,6 +62,27 @@ export const deviceColumns: QTableProps['columns'] = [
     name: 'update_at',
     label: 'Updated At',
     field: 'update_at',
+    align: 'left',
+  },
+  {
+    name: 'options',
+    label: 'Options',
+    field: 'options',
+    align: 'left',
+  },
+]
+
+export const deviceColumnsChildren: QTableProps['columns'] = [
+  {
+    name: 'id',
+    label: 'ID',
+    field: 'id',
+    align: 'left',
+  },
+  {
+    name: 'name',
+    label: 'Name',
+    field: 'name',
     align: 'left',
   },
   {

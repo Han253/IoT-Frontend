@@ -14,7 +14,10 @@ export async function fetchDevices(): Promise<Device[]> {
 }
 
 export async function fetchDeviceById(id: number): Promise<Device> {
-  return (await api.get<Device>(`${BASE_URL}/${id}`)).data
+  const device = (await api.get<Device>(`${BASE_URL}/${id}`)).data
+  device.created_at = formatToDateLocal(device.created_at)
+  device.update_at = formatToDateLocal(device.update_at)
+  return device
 }
 
 export async function storeDevice(data: DeviceForm): Promise<Device> {

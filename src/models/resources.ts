@@ -1,8 +1,9 @@
+import { QTableProps } from 'quasar'
 import { Property } from './properties'
 
 export enum ResourceType {
-  Sensor,
-  Actuator,
+  Sensor = 'SENSOR',
+  Actuator = 'ACTUATOR',
 }
 
 export interface Resource {
@@ -28,3 +29,30 @@ export interface ResourceAction {
   name: string
   description: string
 }
+
+export const resourceColumns: QTableProps['columns'] = [
+  {
+    name: 'name',
+    label: 'Name',
+    field: 'name',
+    align: 'center',
+  },
+  {
+    name: 'type',
+    label: 'Type',
+    field: 'type',
+    align: 'center',
+  },
+  {
+    name: 'description',
+    label: 'Description',
+    field: 'description',
+    align: 'center',
+  },
+  {
+    name: 'device_parent',
+    label: 'Device parent',
+    field: 'device_parent',
+    align: 'center',
+  },
+]
