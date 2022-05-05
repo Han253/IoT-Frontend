@@ -81,10 +81,12 @@
               </div>
             </q-card-section>
 
-            <q-card-actions>
-              <q-btn type="submit" color="primary" flat>SAVE DATA</q-btn>
-              <q-btn :to="{ name: 'devices.index' }" flat>CANCEL</q-btn>
-            </q-card-actions>
+            <q-card-section>
+              <q-btn type="submit" color="primary" unelevated>SAVE DATA</q-btn>
+              <q-btn class="q-ml-sm" :to="{ name: 'devices.index' }" flat>
+                CANCEL
+              </q-btn>
+            </q-card-section>
 
             <q-inner-loading :showing="busy || isSubmitting" />
           </q-card>
