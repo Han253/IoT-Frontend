@@ -48,7 +48,7 @@
                 </div>
               </div>
 
-              <div class="row q-col-gutter-md">
+              <div class="row q-mb-md q-col-gutter-md">
                 <div class="col-12 col-md-6">
                   <q-select
                     filled
@@ -71,6 +71,12 @@
                     :error="!!errors.device_parent || undefined"
                     :error-message="errors.device_parent || undefined"
                   />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12 col-md-6">
+                  <q-checkbox v-model="isGateway" label="Is gateway?" />
                 </div>
               </div>
             </q-card-section>
@@ -130,6 +136,7 @@ const { value: deviceParent } = useField<SelectOption | null>('device_parent')
 const { value: categoriesSelected } = useField<SelectOption[] | null>(
   'categories'
 )
+const isGateway = ref(false)
 
 const onSubmit = handleSubmit(async (values) => {
   const categories = categoriesSelected.value
@@ -142,6 +149,7 @@ const onSubmit = handleSubmit(async (values) => {
 
   values.categories = categories
   values.device_parent = device
+  values.gateway = isGateway.value
 
   try {
     let savedDevice: Device
