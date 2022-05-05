@@ -35,9 +35,9 @@ export const propertyColumns: QTableProps['columns'] = [
     align: 'center',
   },
   {
-    name: 'device_parent',
-    label: 'Device parent',
-    field: 'device_parent',
+    name: 'options',
+    label: 'Options',
+    field: '',
     align: 'center',
   },
 ]

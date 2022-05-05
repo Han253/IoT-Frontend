@@ -1,4 +1,12 @@
 <template>
+  <q-btn
+    :to="{ name: 'properties.form', query: { device: $route.params.id } }"
+    label="Add property"
+    color="primary"
+    class="q-mb-md"
+    unelevated
+  />
+
   <q-table
     flat
     dense
@@ -6,29 +14,23 @@
     :rows="properties"
     :hide-bottom="properties && properties.length > 0"
   >
-    <template #body-cell-device_parent="props">
+    <template #body-cell-options="props">
       <q-td :props="props">
-        <router-link
-          v-if="props.row.device_parent"
-          target="_blank"
+        <q-btn
           :to="{
-            name: 'devices.details',
-            params: { id: 3 },
+            name: 'properties.edit',
+            params: { id: props.row.id },
+            query: { device: $route.params.id },
           }"
-        >
-          Show device
-        </router-link>
-        <span v-else>{{ 'No device' }}</span>
+          color="grey"
+          icon="edit"
+          flat
+          round
+          size="sm"
+        />
       </q-td>
     </template>
   </q-table>
-
-  <q-btn
-    :to="{ name: 'properties.form', query: { device: $route.params.id } }"
-    label="Add property"
-    color="primary"
-    class="q-mt-md"
-  />
 </template>
 
 <script lang="ts" setup>

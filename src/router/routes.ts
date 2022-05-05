@@ -2,6 +2,7 @@ import { RouteRecordRaw } from 'vue-router'
 import categoryRoutes from './routes/categories'
 import deviceRoutes from './routes/devices'
 import environmentRoutes from './routes/environments'
+import propertyRoutes from './routes/properties'
 import topicRoutes from './routes/topics'
 
 const routes: RouteRecordRaw[] = [
@@ -19,6 +20,7 @@ const routes: RouteRecordRaw[] = [
       ...deviceRoutes,
       ...topicRoutes,
       ...environmentRoutes,
+      ...propertyRoutes,
     ],
   },
 
