@@ -3,6 +3,7 @@ import categoryRoutes from './routes/categories'
 import deviceRoutes from './routes/devices'
 import environmentRoutes from './routes/environments'
 import propertyRoutes from './routes/properties'
+import resourceRoutes from './routes/resources'
 import topicRoutes from './routes/topics'
 
 const routes: RouteRecordRaw[] = [
@@ -21,6 +22,7 @@ const routes: RouteRecordRaw[] = [
       ...topicRoutes,
       ...environmentRoutes,
       ...propertyRoutes,
+      ...resourceRoutes,
     ],
   },
 

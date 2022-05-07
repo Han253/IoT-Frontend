@@ -10,13 +10,16 @@ export interface Resource {
   id: number
   name: string
   description: string
-  resource_type: ResourceType
+  type: ResourceType
   device_parent: number
   properties: Array<Property>
 }
 
 export interface ResourceForm {
+  name: string
   description: string
+  type: ResourceType
+  deviceParent: number
 }
 
 export interface ResourceActionForm {
@@ -50,9 +53,9 @@ export const resourceColumns: QTableProps['columns'] = [
     align: 'center',
   },
   {
-    name: 'device_parent',
-    label: 'Device parent',
-    field: 'device_parent',
+    name: 'options',
+    label: 'Options',
+    field: '',
     align: 'center',
   },
 ]
