@@ -1,6 +1,12 @@
 <template>
   <q-btn
-    :to="{ name: 'properties.form', query: { device: $route.params.id } }"
+    :to="{
+      name: 'properties.form',
+      query: getQueryRoute(
+        $route.name?.toString(),
+        $route.params.id.toString()
+      ),
+    }"
     label="Add property"
     color="primary"
     class="q-mb-md"
@@ -37,4 +43,14 @@
 import { Property, propertyColumns } from 'src/models/properties'
 
 defineProps<{ properties: Property[] }>()
+
+const getQueryRoute = (routeName: string | undefined, id: string) => {
+  if (routeName == 'resources.details') {
+    return { resource: id }
+  }
+
+  if (routeName == 'devices.details') {
+    return { device: id }
+  }
+}
 </script>
