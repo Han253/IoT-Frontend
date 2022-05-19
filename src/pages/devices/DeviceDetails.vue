@@ -50,7 +50,7 @@
         </q-tab-panel>
       </q-tab-panels>
 
-      <q-inner-loading :showing="loading" />
+      <q-inner-loading color="primary" :showing="loading" />
     </q-card>
   </q-page>
 </template>
