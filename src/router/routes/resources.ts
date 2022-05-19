@@ -11,6 +11,11 @@ const resourceRoutes: RouteRecordRaw[] = [
     name: 'resources.edit',
     component: () => import('../../pages/resources/RegisterResource.vue'),
   },
+  {
+    path: 'resources/:id',
+    name: 'resources.details',
+    component: () => import('../../pages/resources/ResourceDetails.vue'),
+  },
 ]
 
 export default resourceRoutes
