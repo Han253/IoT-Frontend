@@ -3,7 +3,7 @@
     <template v-slot:avatar>
       <q-icon name="info" color="grey" />
     </template>
-    This device doesn't have devices.
+    No devices
   </q-banner>
 
   <q-table
@@ -42,5 +42,5 @@
 <script lang="ts" setup>
 import { Device, deviceColumnsChildren } from 'src/models/devices'
 
-defineProps<{ devices: Device[] }>()
+defineProps<{ devices?: Device[] }>()
 </script>

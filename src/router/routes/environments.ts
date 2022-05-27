@@ -6,6 +6,11 @@ const environmentRoutes: RouteRecordRaw[] = [
     name: 'environments.index',
     component: () => import('../../pages/environments/EnvironmentIndex.vue'),
   },
+  {
+    path: 'environments/:id',
+    name: 'environments.details',
+    component: () => import('../../pages/environments/EnvironmentDetails.vue'),
+  },
 ]
 
 export default environmentRoutes
