@@ -25,13 +25,13 @@ export const menuList: MenuItem[] = [
     to: { name: 'devices.index' },
   },
   {
-    label: 'Topics',
-    icon: 'share',
-    to: { name: 'topics.index' },
-  },
-  {
     label: 'Environments',
     icon: 'wysiwyg',
     to: { name: 'environments.index' },
+  },
+  {
+    label: 'Self-representation',
+    icon: 'share',
+    to: { name: 'selfrepresentation.index' },
   },
 ]

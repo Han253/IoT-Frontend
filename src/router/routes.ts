@@ -4,7 +4,7 @@ import deviceRoutes from './routes/devices'
 import environmentRoutes from './routes/environments'
 import propertyRoutes from './routes/properties'
 import resourceRoutes from './routes/resources'
-import topicRoutes from './routes/topics'
+import representationRoutes from './routes/selfrepresentation'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -19,7 +19,7 @@ const routes: RouteRecordRaw[] = [
       },
       ...categoryRoutes,
       ...deviceRoutes,
-      ...topicRoutes,
+      ...representationRoutes,
       ...environmentRoutes,
       ...propertyRoutes,
       ...resourceRoutes,
