@@ -76,6 +76,17 @@
 
               <div class="row">
                 <div class="col-12 col-md-6">
+                  <q-select
+                    filled
+                    clearable
+                    v-model="environmentSelected"
+                    :options="envOptions"
+                    label="Environment"
+                    :error="!!errors.environment || undefined"
+                    :error-message="errors.environment || undefined"
+                  />
+                </div>
+                <div class="col-12 col-md-6">
                   <q-checkbox v-model="isGateway" label="Is gateway?" />
                 </div>
               </div>
@@ -103,6 +114,7 @@ import { SelectOption } from 'src/models'
 import { Category } from 'src/models/categories'
 import { Device, DeviceForm } from 'src/models/devices'
 import { fetchCategories } from 'src/services/categories'
+import { fetchEnvironments } from 'src/services/environments'
 import {
   fetchDevices,
   storeDevice,
@@ -113,6 +125,7 @@ import { setErrorsIfInvalidForm } from 'src/utils/forms'
 import { useField, useForm } from 'vee-validate'
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { Environment } from 'src/models/environments'
 
 const $q = useQuasar()
 const router = useRouter()
@@ -125,6 +138,7 @@ const deviceId = route.params.id
 
 const categoriesOptions = ref<SelectOption[]>([])
 const deviceOptions = ref<SelectOption[]>([])
+const envOptions = ref<SelectOption[]>([])
 const busy = ref(true)
 
 const { errors, isSubmitting, handleSubmit, setErrors } = useForm<DeviceForm>({
@@ -138,6 +152,9 @@ const { value: deviceParent } = useField<SelectOption | null>('device_parent')
 const { value: categoriesSelected } = useField<SelectOption[] | null>(
   'categories'
 )
+const { value: environmentSelected } = useField<SelectOption | null>(
+  'environment'
+)
 const isGateway = ref(false)
 
 const onSubmit = handleSubmit(async (values) => {
@@ -149,8 +166,13 @@ const onSubmit = handleSubmit(async (values) => {
     ? (deviceParent.value.value as number)
     : null
 
+  const environment = environmentSelected.value
+    ? (environmentSelected.value.value as number)
+    : null
+
   values.categories = categories
   values.device_parent = device
+  values.environment = environment
   values.gateway = isGateway.value
 
   try {
@@ -178,10 +200,17 @@ const convertCategoriesToOptions = (c: Category[]): SelectOption[] => {
   }))
 }
 
-const convertDevicesToOptions = (c: Device[]): SelectOption[] => {
-  return c.map((device) => ({
+const convertDevicesToOptions = (d: Device[]): SelectOption[] => {
+  return d.map((device) => ({
     label: device.name,
     value: device.id,
+  }))
+}
+
+const convertEnvironmentsToOptions = (e: Environment[]): SelectOption[] => {
+  return e.map((environment) => ({
+    label: environment.name,
+    value: environment.id,
   }))
 }
 
@@ -194,6 +223,11 @@ onMounted(async () => {
     deviceParent.value = deviceData.device_parent
       ? { label: '', value: deviceData.device_parent }
       : null
+
+    environmentSelected.value = deviceData.environment
+      ? { label: '', value: deviceData.environment }
+      : null
+
     categoriesSelected.value = deviceData.categories.map<SelectOption>((c) => ({
       label: c.name,
       value: c.id,
@@ -206,6 +240,9 @@ onMounted(async () => {
   const devices = await fetchDevices()
   deviceOptions.value = convertDevicesToOptions(devices)
 
+  const environments = await fetchEnvironments()
+  envOptions.value = convertEnvironmentsToOptions(environments)
+
   // TODO: Fetch device parent info for remove the below code.
   if (deviceParent.value?.value) {
     deviceOptions.value.forEach((d) => {
@@ -215,6 +252,13 @@ onMounted(async () => {
     })
   }
   ///////////////////////////////////////////////////////////
+  if (environmentSelected.value?.value) {
+    envOptions.value.forEach((e) => {
+      if (e.value == environmentSelected.value?.value) {
+        environmentSelected.value.label = e.label
+      }
+    })
+  }
 
   busy.value = false
 })

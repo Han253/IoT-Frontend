@@ -11,9 +11,10 @@ export enum DeviceStatus {
 
 export interface DeviceForm {
   name: string
-  description: string | null | null
+  description: string | null
   categories: number[]
-  device_parent: number | null | null
+  device_parent: number | null
+  environment: number | null
   gateway: boolean
 }
 
@@ -27,6 +28,7 @@ export interface Device {
   created_at: string
   update_at: string
   device_parent: number
+  environment: number
   properties: Property[]
   resources: Resource[]
   categories: Category[]
