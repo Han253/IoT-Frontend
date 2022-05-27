@@ -16,7 +16,24 @@
       </tr>
       <tr>
         <td>Is gateway?</td>
-        <td colspan="3">{{ device.gateway ? 'Yes' : 'No' }}</td>
+        <td colspan="3">
+          {{ device.gateway ? 'Yes' : 'No' }}
+          <q-btn
+            color="primary"
+            class="q-ml-md"
+            icon="send"
+            label="Send representation"
+            size="sm"
+          />
+          <q-btn
+            @click="getRepresentation"
+            icon="download"
+            color="primary"
+            class="q-ml-md"
+            label="Get representation"
+            size="sm"
+          />
+        </td>
       </tr>
       <tr>
         <td>Categories</td>
@@ -46,5 +63,16 @@ interface Props {
   title?: string
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+const getRepresentation = () => {
+  const jsonString = JSON.stringify(props.device)
+  const url = window.URL.createObjectURL(new Blob([jsonString]))
+  const link = document.createElement('a')
+  link.href = url
+  link.setAttribute('download', 'representation.json')
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+}
 </script>
